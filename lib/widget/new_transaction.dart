@@ -55,59 +55,66 @@ void _presentDatePicker(){
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-          
-          child:Container(
+    return SingleChildScrollView(
+          child: Card(
             
-            padding: EdgeInsets.all(10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                TextField(
-                  decoration: InputDecoration(labelText: 'Title'),
-                  controller: titleController,
-                  onSubmitted: (_)=> submitData(),
-                  ),
-                TextField(
-                  decoration: InputDecoration(labelText: 'Amount'),
-                  controller: amountController,
-                  onSubmitted: (_)=>submitData(),
-                  keyboardType: TextInputType.number,
-                  ),
-                  Container(
-                    height: 110,
-                    child: Row(
-                      children: <Widget>[
-                       _selectedDate == null ?
-                        Expanded(
-                                                  child: Text('Please choose a date',
-                          style: TextStyle(fontFamily: 'Quicksand',
-                          color: Colors.grey,
-                          ),
-                          ),
-                        ):
-                        Text(DateFormat.yMMMd().format(_selectedDate),),
-                        
-                        FlatButton(onPressed: (){
-                          _presentDatePicker();
-                        }, child: Text('Pick a Date',style: TextStyle(fontFamily: 'OpenSans',
-                        fontWeight: FontWeight.bold,
-                        color: Colors.lightBlue[700],
-                         ),))
-                      ],
+            child:Container(
+              
+              padding: EdgeInsets.only(
+                left: 10,
+                right: 10,
+                top: 10,
+                bottom: MediaQuery.of(context).viewInsets.bottom + 10,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Title'),
+                    controller: titleController,
+                    onSubmitted: (_)=> submitData(),
                     ),
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Amount'),
+                    controller: amountController,
+                    onSubmitted: (_)=>submitData(),
+                    keyboardType: TextInputType.number,
+                    ),
+                    Container(
+                      height: 110,
+                      child: Row(
+                        children: <Widget>[
+                         _selectedDate == null ?
+                          Expanded(
+                                                    child: Text('Please choose a date',
+                            style: TextStyle(fontFamily: 'Quicksand',
+                            color: Colors.grey,
+                            ),
+                            ),
+                          ):
+                          Text(DateFormat.yMMMd().format(_selectedDate),),
+                          
+                          FlatButton(onPressed: (){
+                            _presentDatePicker();
+                          }, child: Text('Pick a Date',style: TextStyle(fontFamily: 'OpenSans',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.lightBlue[700],
+                           ),))
+                        ],
+                      ),
+                    ),
+                  RaisedButton(onPressed: (){
+                    submitData();
+                    
+                    
+                  }, child: Text('Add Transaction'),
+                  color: Colors.cyan[600],
+                  textColor: Colors.white,elevation: 4,
                   ),
-                RaisedButton(onPressed: (){
-                  submitData();
-                  
-                  
-                }, child: Text('Add Transaction'),
-                color: Colors.cyan[600],
-                textColor: Colors.white,elevation: 4,
-                ),
-              ],
-            ),
-          )
-        );
+                ],
+              ),
+            )
+          ),
+    );
   }
 }
