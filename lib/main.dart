@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Transactions> _userTransactions = [
     
   ];
-
+  bool _showChart = false;
   List <Transactions> get _recentTransaction{
     return _userTransactions.where((element){
       return element.date.isAfter(
@@ -91,13 +91,14 @@ setState(() {
 
   @override
   Widget build(BuildContext context) {
+    final Color activeColor = Color.fromRGBO(0, 255, 255, 1);
      final appBar = AppBar(
-        title: Text('My Expenses App', style: TextStyle(fontFamily: 'OpenSans',fontWeight: FontWeight.bold,fontSize: 22),),
+        title: Text('My Expenses App', style: TextStyle(fontFamily: 'OpenSans',fontWeight: FontWeight.bold,fontSize: 22,color: Colors.white),),
         
           
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.add),
+            icon: Icon(Icons.add),color: Colors.white,
             onPressed: () => _startAddNewTransaction(context),
           ),
         ],
@@ -110,9 +111,31 @@ setState(() {
           
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+              
+                Padding(
+                  padding: EdgeInsets.all(9),
+                  child: Text(
+                    'Show Chart',style: TextStyle(fontFamily: 'OpenSans',color: Colors.grey,
+                  ),
+                ),),
+
+                Switch(value: _showChart,activeColor: activeColor,onChanged: (val){
+                  setState(() {
+                    
+                    _showChart = val;
+
+                  });
+                }),
+
+              ],
+            ),
+            
+            _showChart?
             Container(
               height: (MediaQuery.of(context).size.height-appBar.preferredSize.height)*0.3 - MediaQuery.of(context).padding.top ,
-              child: Chart(_recentTransaction,)),
+              child: Chart(_recentTransaction,)):
             Container(
               height:  (MediaQuery.of(context).size.height-appBar.preferredSize.height)*0.7 - MediaQuery.of(context).padding.top ,
               child: TransactionsList(_userTransactions,_deleteTransaction)),
@@ -121,7 +144,7 @@ setState(() {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(foregroundColor: Colors.white,
-        child: Icon(Icons.add),
+        child: Icon(Icons.add,),
         onPressed: () => _startAddNewTransaction(context),
         
       ),
